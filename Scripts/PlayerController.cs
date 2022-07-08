@@ -28,17 +28,17 @@ public class PlayerController : MonoBehaviour
         cameraFollowTarget.PauseFollow(false);
 
         Transform exitGate = FindObjectOfType<Exit>().transform;
-        StartCoroutine(ShowExitAtStart(exitGate));
+        StartCoroutine(ShowExitAtStart(exitGate));          //PLAY INTRO SEQUENCE
     }
 
     IEnumerator ShowExitAtStart(Transform exit)
     {
         yield return new WaitForSeconds(1f);
-        cameraFollowTarget.SwitchTartget(exit, false);
-        yield return new WaitForSeconds(2f);
-        cameraFollowTarget.SwitchTartget(transform,false);
+        cameraFollowTarget.SwitchTartget(exit, false);  //change camera target to exit
+        yield return new WaitForSeconds(2f);            
+        cameraFollowTarget.SwitchTartget(transform,false);  //change camera target back to player 
         yield return new WaitForSeconds(1f);
-        GetComponent<PlayerInput>().enabled = true;
+        GetComponent<PlayerInput>().enabled = true;     //enable player input
     }
 
     private void OnJump()

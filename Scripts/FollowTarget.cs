@@ -15,7 +15,7 @@ public class FollowTarget : MonoBehaviour
     Vector3 velocity;
 
     [SerializeField] float switchSmoothTime = 0.2f;
-    [SerializeField] float switchMaxSpeed = 25f;
+    [SerializeField] float switchMaxSpeed = 25f;        //higher value for faster switching
     [SerializeField] float switchSpeedThreshold = 0.5f;     //Lower value gives better results
 
     bool isPaused;
@@ -44,7 +44,7 @@ public class FollowTarget : MonoBehaviour
             targetOffset = transform.position - target.position;
 
 
-        StartCoroutine(SwitchTransition());
+        StartCoroutine(SwitchTransition());     //for faster/slower transitions
     }
 
     IEnumerator SwitchTransition()
@@ -52,14 +52,16 @@ public class FollowTarget : MonoBehaviour
         smoothTime = switchSmoothTime;
         maxSpeed = switchMaxSpeed;              //Switching speed
 
-        while (velocity.sqrMagnitude <= switchSpeedThreshold)   
+        while (velocity.sqrMagnitude <= switchSpeedThreshold)   //wait until camera speed
+                                                                //goes above threshold 
         {
             yield return new WaitForEndOfFrame();
         }
 
         //AT THIS POINT CAMERA ACCELERATES ABOVE THRESHOLD
 
-        while(velocity.sqrMagnitude > switchSpeedThreshold)
+        while(velocity.sqrMagnitude > switchSpeedThreshold)     //wait until camera speed goes below threshold
+                                                                //(only happens when camera is about to reach the destination)
         {
             yield return new WaitForEndOfFrame();
         }
@@ -74,7 +76,8 @@ public class FollowTarget : MonoBehaviour
         //YOU CAN USE A DELEGATE CALL HERE, WHEN THE TRANSITION IS COMPLETE
     }
 
-    public void PauseFollow(bool value)
+    public void PauseFollow(bool value) //used to pause and unpause the camera
+                                        //useful if you don't want to follow the target but keep the target the same
     {
         isPaused = value;
     }
