@@ -17,8 +17,6 @@ public class PlayerController : MonoBehaviour
     bool isGrounded;
     float horizontalInput;
 
-    [SerializeField] Transform player2; //OPTIONAL, REMOVE IF YOU DON'T HAVE A SECOND CHARACTER
-
     FollowTarget cameraFollowTarget;
 
     private void Start()
@@ -43,7 +41,6 @@ public class PlayerController : MonoBehaviour
 
     private void OnJump()
     {
-        cameraFollowTarget.SwitchTartget(player2, false);
         if(isGrounded)
             rb2D.velocity += Vector2.up * jumpForce;
     }
